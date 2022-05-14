@@ -45,6 +45,13 @@ public class Pelicula {
         this.calificacion = calificacion;
     }
 
+    @Override
+    public String toString() {
+        return "Pelicula{" + "id=" + id + ", imagen=" + imagen + ", titulo=" + titulo + ", fecha_creacion=" + fecha_creacion + ", calificacion=" + calificacion + ", genero=" + genero + '}';
+    }
+
+    
+
     
     
     
