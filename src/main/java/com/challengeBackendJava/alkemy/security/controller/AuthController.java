@@ -12,7 +12,10 @@ import com.challengeBackendJava.alkemy.security.entity.Usuario;
 import com.challengeBackendJava.alkemy.security.enums.RolNombre;
 import com.challengeBackendJava.alkemy.security.jwt.JwtProvider;
 import com.challengeBackendJava.alkemy.security.service.RolService;
+import com.challengeBackendJava.alkemy.security.service.SendGridService;
 import com.challengeBackendJava.alkemy.security.service.UsuarioService;
+import com.challengeBackendJava.alkemy.security.util.SendGridMail;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +51,12 @@ public class AuthController {
 
     @Autowired
     JwtProvider jwtProvider;
+    
+    @Autowired
+    SendGridService sendGridService;
 
-    @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
+    @PostMapping("/register")
+    public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) throws IOException{
         if(bindingResult.hasErrors())
             return new ResponseEntity(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
         if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
@@ -66,6 +72,9 @@ public class AuthController {
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
         usuario.setRoles(roles);
         usuarioService.save(usuario);
+        
+        SendGridMail sendGridMail = new SendGridMail(nuevoUsuario.getEmail());
+        sendGridService.sendRequest(sendGridMail);
         return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
     }
 

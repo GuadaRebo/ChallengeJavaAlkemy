@@ -39,27 +39,30 @@ public class Pelicula  implements Serializable{
     @Max(5)
     private Long calificacion;
      
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
      @JoinColumn(name = "genero_id")
     private Genero genero;
      
     
-     @ManyToMany(fetch=FetchType.LAZY,  mappedBy = "idPelicula", cascade = CascadeType.ALL)
-     private List<Personaje> idPersonaje;
+     @ManyToMany(  mappedBy = "pelicula", cascade = {
+        
+        CascadeType.MERGE
+    })
+     private List<Personaje> personaje;
      
     
 
     public Pelicula() {
     }
 
-    public Pelicula(Long idPelicula, String imagen, String titulo, Date fecha_creacion, Long calificacion, Genero genero, List<Personaje> idPersonaje) {
+    public Pelicula(Long idPelicula, String imagen, String titulo, Date fecha_creacion, Long calificacion, Genero genero, List<Personaje> personaje) {
         this.idPelicula = idPelicula;
         this.imagen = imagen;
         this.titulo = titulo;
         this.fecha_creacion = fecha_creacion;
         this.calificacion = calificacion;
         this.genero = genero;
-        this.idPersonaje = idPersonaje;
+        this.personaje = personaje;
     }
 
     

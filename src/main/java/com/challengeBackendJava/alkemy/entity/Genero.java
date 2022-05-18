@@ -31,7 +31,7 @@ public class Genero  implements Serializable{
     private String imagen;
     private String nombre;
    
-    @OneToMany(mappedBy ="genero",fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="genero", cascade = CascadeType.MERGE)
      private List<Pelicula> pelicula;
        
     

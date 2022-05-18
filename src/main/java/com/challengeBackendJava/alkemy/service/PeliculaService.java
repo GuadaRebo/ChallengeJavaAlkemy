@@ -5,6 +5,7 @@ import com.challengeBackendJava.alkemy.dto.PeliculaDto;
 import com.challengeBackendJava.alkemy.entity.Pelicula;
 import com.challengeBackendJava.alkemy.repository.PeliculaRepository;
 import com.challengeBackendJava.alkemy.utils.MHelpers;
+import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 
@@ -55,6 +56,16 @@ public class PeliculaService implements IPeliculaService{
              
       
     } 
+
+    @Override
+    public List<PeliculaDto> findAllByGenero(String genero) {
+       List<PeliculaDto> entities = peliRepo.findAllByGenero(genero);
+       List<PeliculaDto> dtos = new ArrayList<>();
+       {
+         dtos.add(MHelpers.modelMapper().map( entities, PeliculaDto.class));
+       }
+       return dtos;
+    }
     
    
     

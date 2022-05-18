@@ -22,4 +22,6 @@ public interface IPeliculaService {
     public Pelicula actualizarPelicula (Pelicula pelicula);
     
     public PeliculaDto findByTitulo(String titulo);
+    
+    public List<PeliculaDto> findAllByGenero(String genero);
 }

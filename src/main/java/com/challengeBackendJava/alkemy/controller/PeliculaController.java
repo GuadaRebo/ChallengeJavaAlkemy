@@ -44,6 +44,14 @@ public class PeliculaController {
              
     }
     
+    @GetMapping ("/movies/gender")
+    @ResponseBody
+    public List<PeliculaDto> findAllByGenero( @RequestParam String genero) {
+        return peliServ.findAllByGenero(genero); 
+             
+    }
+    
+    
     @PostMapping ("/movies/new")
     public Pelicula agregarPelicula (@RequestBody Pelicula pelicula) {
         peliServ.crearPelicula(pelicula);

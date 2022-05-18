@@ -25,23 +25,23 @@ public class Personaje implements Serializable{
     private Long peso;
     private String historia;
      
-    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany (cascade = CascadeType.REFRESH)
     @JoinTable(name = "personaje_pelicula", 
             joinColumns = @JoinColumn(name = "idPersonaje", nullable = false), 
             inverseJoinColumns = @JoinColumn(name = "idPelicula", nullable = false))
-     private List<Pelicula> idPelicula;     
+     private List<Pelicula> pelicula;     
     
     public Personaje() {
     }
 
-    public Personaje(Long idPersonaje, String imagen, String nombre, Long edad, Long peso, String historia, List<Pelicula> idPelicula) {
+    public Personaje(Long idPersonaje, String imagen, String nombre, Long edad, Long peso, String historia, List<Pelicula> pelicula) {
         this.idPersonaje = idPersonaje;
         this.imagen = imagen;
         this.nombre = nombre;
         this.edad = edad;
         this.peso = peso;
         this.historia = historia;
-        this.idPelicula = idPelicula;
+        this.pelicula = pelicula;
     }
 
     
