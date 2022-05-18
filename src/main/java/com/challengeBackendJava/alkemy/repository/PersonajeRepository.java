@@ -1,7 +1,9 @@
 
 package com.challengeBackendJava.alkemy.repository;
 
+import com.challengeBackendJava.alkemy.entity.Pelicula;
 import com.challengeBackendJava.alkemy.entity.Personaje;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +16,7 @@ public interface PersonajeRepository extends JpaRepository <Personaje, Long>{
      
       public Personaje findByPeso(Long Peso);
      
-      public Personaje findByPelicula(String Pelicula);
+     
     
     
 }

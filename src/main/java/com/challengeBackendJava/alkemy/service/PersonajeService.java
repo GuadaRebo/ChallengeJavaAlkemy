@@ -2,7 +2,9 @@
 package com.challengeBackendJava.alkemy.service;
 
 import com.challengeBackendJava.alkemy.dto.PersonajeDto;
+import com.challengeBackendJava.alkemy.entity.Pelicula;
 import com.challengeBackendJava.alkemy.entity.Personaje;
+import com.challengeBackendJava.alkemy.repository.PeliculaRepository;
 import com.challengeBackendJava.alkemy.repository.PersonajeRepository;
 import com.challengeBackendJava.alkemy.utils.MHelpers;
 import java.util.List;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class PersonajeService implements IPersonajeService{
     @Autowired    
     public PersonajeRepository persoRepo;
+     @Autowired    
+    public PeliculaRepository peliRepo;
     
      @Override
     public List<Personaje> verListaPersonaje() {
@@ -20,8 +24,8 @@ public class PersonajeService implements IPersonajeService{
     }
     
     @Override
-    public Personaje verPersonaje(Long id) {
-     return persoRepo.findById(id).orElse(null);
+    public Personaje verPersonaje(Long idPersonaje) {
+     return persoRepo.findById(idPersonaje).orElse(null);
 }    
     
     @Override
@@ -31,8 +35,8 @@ public class PersonajeService implements IPersonajeService{
     }
 
     @Override
-    public void borrarPersonaje(Long id) {
-        persoRepo.deleteById(id);
+    public void borrarPersonaje(Long idPersonaje) {
+        persoRepo.deleteById(idPersonaje);
     }
 
     @Override
@@ -57,6 +61,8 @@ public class PersonajeService implements IPersonajeService{
        Personaje personaje = this.persoRepo.findByPeso(peso);
         return MHelpers.modelMapper().map(personaje, PersonajeDto.class);
     }
+
+    
     
     
     

@@ -2,6 +2,7 @@
 package com.challengeBackendJava.alkemy.controller;
 
 import com.challengeBackendJava.alkemy.dto.PersonajeDto;
+import com.challengeBackendJava.alkemy.entity.Pelicula;
 import com.challengeBackendJava.alkemy.entity.Personaje;
 import com.challengeBackendJava.alkemy.service.IPersonajeService;
 import java.util.List;
@@ -28,10 +29,10 @@ public class PersonajeController {
         return persoServ.verListaPersonaje();
     }
      
-     @GetMapping ("/characters/{id}")
+     @GetMapping ("/characters/{idPersonaje}")
     @ResponseBody
-    public Personaje verPersonaje (@PathVariable Long id) {
-        return persoServ.verPersonaje(id);
+    public Personaje verPersonaje (@PathVariable Long idPersonaje) {
+        return persoServ.verPersonaje(idPersonaje);
         
     }
      @GetMapping ("/characters/name")
@@ -53,6 +54,8 @@ public class PersonajeController {
              
     }   
     
+     
+    
     
     @PostMapping ("/characters/new")
     public Personaje agregarPersonaje (@RequestBody Personaje personaje) {
@@ -62,9 +65,9 @@ public class PersonajeController {
        
     }
     
-     @DeleteMapping ("/characters/delete/{id}")
-    public void borrarPersonaje (@PathVariable Long id) {
-        persoServ.borrarPersonaje(id);       
+     @DeleteMapping ("/characters/delete/{idPersonaje}")
+    public void borrarPersonaje (@PathVariable Long idPersonaje) {
+        persoServ.borrarPersonaje(idPersonaje);       
     }
     
     @PutMapping ("/characters/edit")

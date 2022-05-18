@@ -1,16 +1,24 @@
 
 package com.challengeBackendJava.alkemy.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import lombok.Getter;
@@ -18,41 +26,50 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-public class Pelicula {
+@Table(name="pelicula")
+public class Pelicula  implements Serializable{
      @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long idPelicula;
     @Basic
     private String imagen;
     private String titulo;
     private Date fecha_creacion;
-    @Min(value=1)
-    @Max(value=5)
+    @Min(1)
+    @Max(5)
     private Long calificacion;
-    @ManyToOne
+     
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
      @JoinColumn(name = "genero_id")
     private Genero genero;
+     
+    
+     @ManyToMany(fetch=FetchType.LAZY,  mappedBy = "idPelicula", cascade = CascadeType.ALL)
+     private List<Personaje> idPersonaje;
+     
     
 
     public Pelicula() {
     }
 
-    public Pelicula(Long id, String imagen, String titulo, Date fecha_creacion, Long calificacion) {
-        this.id = id;
+    public Pelicula(Long idPelicula, String imagen, String titulo, Date fecha_creacion, Long calificacion, Genero genero, List<Personaje> idPersonaje) {
+        this.idPelicula = idPelicula;
         this.imagen = imagen;
         this.titulo = titulo;
         this.fecha_creacion = fecha_creacion;
         this.calificacion = calificacion;
-    }
-
-    @Override
-    public String toString() {
-        return "Pelicula{" + "id=" + id + ", imagen=" + imagen + ", titulo=" + titulo + ", fecha_creacion=" + fecha_creacion + ", calificacion=" + calificacion + ", genero=" + genero + '}';
+        this.genero = genero;
+        this.idPersonaje = idPersonaje;
     }
 
     
 
     
+
+     
+
+ 
+
+} 
     
-    
-}
+

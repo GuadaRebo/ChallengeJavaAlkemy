@@ -3,6 +3,7 @@ package com.challengeBackendJava.alkemy.controller;
 
 import com.challengeBackendJava.alkemy.dto.PeliculaDto;
 import com.challengeBackendJava.alkemy.entity.Pelicula;
+import com.challengeBackendJava.alkemy.service.IGeneroService;
 import com.challengeBackendJava.alkemy.service.IPeliculaService;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PeliculaController {
      @Autowired
     private IPeliculaService peliServ;
+      @Autowired
+     private IGeneroService genServ;
      
       @GetMapping ("/movies")
     @ResponseBody
@@ -28,10 +31,10 @@ public class PeliculaController {
         return peliServ.verListaPelicula();
     }
      
-     @GetMapping ("/movies/{id}")
+     @GetMapping ("/movies/{idPelicula}")
     @ResponseBody
-    public Pelicula verPelicula (@PathVariable Long id) {
-        return peliServ.verPelicula(id);
+    public Pelicula verPelicula (@PathVariable Long idPelicula) {
+        return peliServ.verPelicula(idPelicula);
     }
     
     @GetMapping ("/movies/name")
@@ -47,9 +50,9 @@ public class PeliculaController {
         return pelicula;
     }
     
-     @DeleteMapping ("/movies/delete/{id}")
-    public void borrarPelicula (@PathVariable Long id) {
-        peliServ.borrarPelicula(id);       
+     @DeleteMapping ("/movies/delete/{idPelicula}")
+    public void borrarPelicula (@PathVariable Long idPelicula) {
+        peliServ.borrarPelicula(idPelicula);       
     }
     
     @PutMapping ("/movies/edit")

@@ -28,8 +28,8 @@ public class PeliculaService implements IPeliculaService{
     }
 
     @Override
-    public Pelicula verPelicula(Long id) {
-        return peliRepo.findById(id).orElse(null);
+    public Pelicula verPelicula(Long idPelicula) {
+        return peliRepo.findById(idPelicula).orElse(null);
     }
 
     @Override
@@ -39,8 +39,8 @@ public class PeliculaService implements IPeliculaService{
     }
 
     @Override
-    public void borrarPelicula(Long id) {
-        peliRepo.deleteById(id);
+    public void borrarPelicula(Long idPelicula) {
+        peliRepo.deleteById(idPelicula);
     }
 
     @Override
