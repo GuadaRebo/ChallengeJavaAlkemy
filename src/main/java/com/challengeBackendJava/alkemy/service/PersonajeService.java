@@ -1,6 +1,7 @@
 
 package com.challengeBackendJava.alkemy.service;
 
+import com.challengeBackendJava.alkemy.dto.PersonajeConPeliculasDto;
 import com.challengeBackendJava.alkemy.dto.PersonajeDto;
 import com.challengeBackendJava.alkemy.entity.Pelicula;
 import com.challengeBackendJava.alkemy.entity.Personaje;
@@ -24,14 +25,15 @@ public class PersonajeService implements IPersonajeService{
     }
     
     @Override
-    public Personaje verPersonaje(Long idPersonaje) {
-     return persoRepo.findById(idPersonaje).orElse(null);
+    public PersonajeConPeliculasDto verPersonaje(Long idPersonaje) {
+     Personaje personaje = persoRepo.findById(idPersonaje).orElse(null);
+     return MHelpers.modelMapper().map(personaje, PersonajeConPeliculasDto.class);
 }    
     
     @Override
-    public Personaje crearPersonaje(Personaje personaje) {
-       return persoRepo.save(personaje);
-      
+    public PersonajeConPeliculasDto crearPersonaje(Personaje personaje) {
+        persoRepo.save(personaje);
+       return MHelpers.modelMapper().map(personaje, PersonajeConPeliculasDto.class);
     }
 
     @Override
@@ -40,8 +42,9 @@ public class PersonajeService implements IPersonajeService{
     }
 
     @Override
-    public Personaje actualizarPersonaje(Personaje personaje) {
-       return persoRepo.save(personaje);
+    public PersonajeConPeliculasDto actualizarPersonaje(Personaje personaje) {
+        persoRepo.save(personaje);
+       return MHelpers.modelMapper().map(personaje, PersonajeConPeliculasDto.class);
     }
 
     @Override
@@ -62,7 +65,12 @@ public class PersonajeService implements IPersonajeService{
         return MHelpers.modelMapper().map(personaje, PersonajeDto.class);
     }
 
-    
+     @Override
+    public PersonajeDto findByPelicula(Pelicula idMovie) {
+        Personaje personaje = this.persoRepo.findByPelicula(idMovie);
+        return MHelpers.modelMapper().map(personaje, PersonajeDto.class);
+    }
+
     
     
     

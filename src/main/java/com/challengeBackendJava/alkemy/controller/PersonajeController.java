@@ -1,9 +1,12 @@
 
 package com.challengeBackendJava.alkemy.controller;
 
+import com.challengeBackendJava.alkemy.dto.PersonajeConPeliculasDto;
 import com.challengeBackendJava.alkemy.dto.PersonajeDto;
 import com.challengeBackendJava.alkemy.entity.Pelicula;
 import com.challengeBackendJava.alkemy.entity.Personaje;
+import com.challengeBackendJava.alkemy.repository.PeliculaRepository;
+import com.challengeBackendJava.alkemy.repository.PersonajeRepository;
 import com.challengeBackendJava.alkemy.service.IPersonajeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonajeController {
      @Autowired
     private IPersonajeService persoServ;
+       @Autowired    
+    public PeliculaRepository peliRepo;
+       @Autowired    
+    public PersonajeRepository persoRepo;
      
      
       @GetMapping ("/characters")
@@ -31,7 +38,7 @@ public class PersonajeController {
      
      @GetMapping ("/characters/{idPersonaje}")
     @ResponseBody
-    public Personaje verPersonaje (@PathVariable Long idPersonaje) {
+    public PersonajeConPeliculasDto verPersonaje (@PathVariable Long idPersonaje) {
         return persoServ.verPersonaje(idPersonaje);
         
     }
@@ -53,26 +60,26 @@ public class PersonajeController {
        return persoServ.findByPeso(peso); 
              
     }   
-    
-     
-    
-    
+     @GetMapping ("/characters/movies") 
+    @ResponseBody
+    public PersonajeDto findByPelicula( @RequestParam Pelicula idMovie) {
+       return persoServ.findByPelicula(idMovie); 
+    }
+      
     @PostMapping ("/characters/new")
-    public Personaje agregarPersonaje (@RequestBody Personaje personaje) {
-       persoServ.crearPersonaje(personaje);
-       return personaje;
-       
-       
+    public PersonajeConPeliculasDto agregarPersonaje (@RequestBody Personaje personaje) {
+     return  persoServ.crearPersonaje(personaje);
+                 
     }
     
-     @DeleteMapping ("/characters/delete/{idPersonaje}")
-    public void borrarPersonaje (@PathVariable Long idPersonaje) {
-        persoServ.borrarPersonaje(idPersonaje);       
+     @DeleteMapping ("/characters/delete/{id_personaje}")
+    public void borrarPersonaje (@PathVariable Long id_personaje) {               
+        persoServ.borrarPersonaje(id_personaje);       
     }
     
     @PutMapping ("/characters/edit")
-    public Personaje actualizarPersonaje (@RequestBody Personaje personaje)   {
-        persoServ.actualizarPersonaje(personaje);
-        return personaje;
+    public PersonajeConPeliculasDto actualizarPersonaje (@RequestBody Personaje personaje)   {
+      return  persoServ.actualizarPersonaje(personaje);
+         
     }
 }

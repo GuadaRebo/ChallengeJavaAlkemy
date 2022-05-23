@@ -2,11 +2,13 @@
 package com.challengeBackendJava.alkemy.controller;
 
 import com.challengeBackendJava.alkemy.dto.PeliculaDto;
+import com.challengeBackendJava.alkemy.entity.Genero;
 import com.challengeBackendJava.alkemy.entity.Pelicula;
-import com.challengeBackendJava.alkemy.service.IGeneroService;
+import com.challengeBackendJava.alkemy.entity.Personaje;
+import com.challengeBackendJava.alkemy.repository.PeliculaRepository;
+import com.challengeBackendJava.alkemy.repository.PersonajeRepository;
 import com.challengeBackendJava.alkemy.service.IPeliculaService;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PeliculaController {
-     @Autowired
+    @Autowired
     private IPeliculaService peliServ;
-      @Autowired
-     private IGeneroService genServ;
+    @Autowired    
+    public PeliculaRepository peliRepo;
+    @Autowired    
+    public PersonajeRepository persoRepo;
      
       @GetMapping ("/movies")
     @ResponseBody
@@ -46,8 +50,8 @@ public class PeliculaController {
     
     @GetMapping ("/movies/gender")
     @ResponseBody
-    public List<PeliculaDto> findAllByGenero( @RequestParam String genero) {
-        return peliServ.findAllByGenero(genero); 
+    public PeliculaDto findByGenero( @RequestParam Genero id_genero) {
+        return peliServ.findByGenero(id_genero); 
              
     }
     
@@ -67,5 +71,32 @@ public class PeliculaController {
     public Pelicula actualizarPelicula (@RequestBody Pelicula pelicula)   {
         peliServ.actualizarPelicula(pelicula);
         return pelicula;
+    }
+    
+     @PostMapping("/movies/{idMovie}/characters/{idCharacter}")
+    public void agregarPersonaAPelicula(@PathVariable("idMovie") Long id_pelicula,
+                                            @PathVariable("idCharacter") Long id_personaje){
+        Pelicula pelicula = peliRepo.findById(id_pelicula).orElse(null);
+        Personaje personaje = persoRepo.findById(id_personaje).orElse(null);
+
+        pelicula.getPersonaje().add(personaje);
+        personaje.getPelicula().add(pelicula);
+
+        peliRepo.save(pelicula);
+        persoRepo.save(personaje);
+    }
+    
+     @DeleteMapping("/movies/{idMovie}/characters/{idCharacter}")
+    public void deleteCharacterFromSeriesOrMovie(@PathVariable("idMovie") Long id_pelicula,
+                                            @PathVariable("idCharacter") Long id_personaje){
+
+        Pelicula pelicula = peliRepo.findById(id_pelicula).orElse(null);
+         Personaje personaje = persoRepo.findById(id_personaje).orElse(null);
+
+        pelicula.getPersonaje().remove(personaje);
+        personaje.getPelicula().remove(pelicula);
+
+        peliRepo.save(pelicula);
+        persoRepo.save(personaje);
     }
 }

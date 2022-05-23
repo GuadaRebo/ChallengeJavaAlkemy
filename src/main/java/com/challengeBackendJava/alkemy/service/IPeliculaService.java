@@ -2,6 +2,7 @@
 package com.challengeBackendJava.alkemy.service;
 
 import com.challengeBackendJava.alkemy.dto.PeliculaDto;
+import com.challengeBackendJava.alkemy.entity.Genero;
 import com.challengeBackendJava.alkemy.entity.Pelicula;
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface IPeliculaService {
     
     public PeliculaDto findByTitulo(String titulo);
     
-    public List<PeliculaDto> findAllByGenero(String genero);
+    public PeliculaDto findByGenero(Genero id_genero);
 }

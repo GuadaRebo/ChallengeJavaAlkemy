@@ -2,15 +2,12 @@
 package com.challengeBackendJava.alkemy.service;
 
 import com.challengeBackendJava.alkemy.dto.PeliculaDto;
+import com.challengeBackendJava.alkemy.entity.Genero;
 import com.challengeBackendJava.alkemy.entity.Pelicula;
 import com.challengeBackendJava.alkemy.repository.PeliculaRepository;
 import com.challengeBackendJava.alkemy.utils.MHelpers;
-import java.util.ArrayList;
 import java.util.List;
-import org.modelmapper.ModelMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -58,13 +55,10 @@ public class PeliculaService implements IPeliculaService{
     } 
 
     @Override
-    public List<PeliculaDto> findAllByGenero(String genero) {
-       List<PeliculaDto> entities = peliRepo.findAllByGenero(genero);
-       List<PeliculaDto> dtos = new ArrayList<>();
-       {
-         dtos.add(MHelpers.modelMapper().map( entities, PeliculaDto.class));
-       }
-       return dtos;
+    public PeliculaDto findByGenero(Genero id_genero) {
+       Pelicula pelicula = this.peliRepo.findByGenero( id_genero);
+     return  MHelpers.modelMapper().map( pelicula, PeliculaDto.class);
+       
     }
     
    
