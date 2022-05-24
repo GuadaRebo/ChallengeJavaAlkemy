@@ -16,18 +16,18 @@ public class PersonajeConPeliculasDto implements Serializable{
     private Long edad;
     private Long peso;
     private String historia;
-    private List<Pelicula> peliculas;   
+    private List<Pelicula> pelicula;   
 
     public PersonajeConPeliculasDto() {
     }
 
-    public PersonajeConPeliculasDto(String imagen, String nombre, Long edad, Long peso, String historia, List<Pelicula> peliculas) {
+    public PersonajeConPeliculasDto(String imagen, String nombre, Long edad, Long peso, String historia, List<Pelicula> pelicula) {
         this.imagen = imagen;
         this.nombre = nombre;
         this.edad = edad;
         this.peso = peso;
         this.historia = historia;
-        this.peliculas = peliculas;
+        this.pelicula = pelicula;
     }
     
     
