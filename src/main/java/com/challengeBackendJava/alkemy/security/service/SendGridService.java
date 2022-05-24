@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SendGridService {
-    SendGrid sg = new SendGrid("Alkemy");
+    SendGrid sg = new SendGrid("AlkemyKey");
 
     public void sendRequest(SendGridMail sendGridMail) throws IOException {
 
